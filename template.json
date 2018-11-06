@@ -1,0 +1,9 @@
+{
+    "builders": [
+        {
+            "type": "docker",
+            "image": "ubuntu:xenial",
+            "export_path": "xenial.tar"
+        }
+    ]
+}
