@@ -1,9 +1,33 @@
 {
+    "variables": {
+        "dhub_user": "",
+        "dhub_pwd": "",
+        "repository": "ubuntu",
+        "tag":"xenial"
+    },
+    "sensitive-variables": [
+        "dhub_pwd"
+    ],
     "builders": [
         {
             "type": "docker",
             "image": "ubuntu:xenial",
             "export_path": "xenial.tar"
         }
+    ],
+    "post-processors": [
+        [
+            {
+                "type": "docker-import",
+                "repository": "{{user `dhub_user`}}/{{user `repository`}}",
+                "tag": "{{user `tag`}}"
+            },
+            {
+                "type": "docker-push",
+                "login": true,
+                "login_username": "{{user `dhub_user`}}",
+                "login_password": "{{user `dhub_pwd`}}"
+            }
+        ]
     ]
 }
